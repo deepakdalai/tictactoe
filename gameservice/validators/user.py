@@ -5,7 +5,8 @@ schema = {
             "properties" : {
                 "name" : {"type" : "string"},
                 "email" : {"type" : "string"},
-                "alias" : {"type" : "string"}
+                "alias" : {"type" : "string"},
+                "password" : {"type" : "string"}
             }
         }
 

@@ -18,16 +18,6 @@ def get_user_by_mail(email):
 def create_user(user_object):
     usercltn.insert_one(user_object)
 
-def get_users_by_params(params):
-
-    filter = {}
-    if "name" in params:
-        filter.update({"name" : params["name"] }) 
-    if "email" in params:
-        filter.update({"email" : params["email"] }) 
-
-    return list(usercltn.find(filter))
-
 
 
 
