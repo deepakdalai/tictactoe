@@ -1,0 +1,80 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+  <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div ng-app="myApp" ng-controller="myCtrl" style="margin-left:10%;margin-right:10%;margin-top:50px;width:80%" >
+
+
+    <div ng-hide="loginhide">
+      <div class="form-group">
+          <label for="usr">Email:</label>
+          <input type="text" class="form-control" id="usr" ng-model="email">
+      </div>     
+    	<div class="form-group">
+    		  <label for="pwd">Password:</label>
+    		  <input type="password" class="form-control" id="pwd" ng-model="pwd">
+    	</div>
+          
+      <button type="button" ng-click="login()" class="btn btn-block btn-primary	">    
+            Login
+      </button>
+    </div>
+    <div ng-show="loginhide">
+         <h1> REST OF THE PAGE </h1>
+
+    </div>
+
+
+  </div>
+</body>
+
+
+<script>
+    var app = angular.module('myApp', ['ui.bootstrap']);
+    app.controller('myCtrl', function($scope, $http, $timeout, $interval, $q) {
+
+      $scope.game_service_url = "http://navcatalogdev.agrostar.in"
+
+
+      $scope.login = function() {
+             $http(
+                  {
+                      url: $scope.game_service_url + '/gameservice/uservalidation',
+                      method: 'POST',
+                      headers : {
+                        'Content-Type':'application/json' 
+                      },
+                      data : {
+                          email : $scope.email,
+                          password : $scope.pwd
+                      }
+                  }
+          ).then(
+                  function (response) {
+                      //$scope.token_str = response.data.responseData['X-Authorization-Token']
+                      console.log(response['data']['response']['token'])
+                      localStorage.setItem("token", response['data']['response']['token']);
+                      $scope.loginhide = true 
+                  } 
+          ) 	
+      }
+
+    });
+
+</script>
+
+</html>
